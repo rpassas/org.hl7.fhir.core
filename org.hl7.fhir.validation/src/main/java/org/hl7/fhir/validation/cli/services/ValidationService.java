@@ -11,6 +11,7 @@ import java.lang.management.MemoryMXBean;
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -81,11 +82,17 @@ import org.hl7.fhir.validation.cli.utils.VersionSourceInformation;
 
 public class ValidationService {
 
+  private static final TimeUnit TIME_UNIT = TimeUnit.MINUTES;
   private final SessionCache sessionCache;
   private String runDate;
 
   public ValidationService() {
     sessionCache = new SessionCache();
+    runDate = new SimpleDateFormat("hh:mm:ss", new Locale("en", "US")).format(new Date());
+  }
+
+  public ValidationService(long cacheDuration) {
+    sessionCache = new SessionCache(cacheDuration, TIME_UNIT);
     runDate = new SimpleDateFormat("hh:mm:ss", new Locale("en", "US")).format(new Date());
   }
 
