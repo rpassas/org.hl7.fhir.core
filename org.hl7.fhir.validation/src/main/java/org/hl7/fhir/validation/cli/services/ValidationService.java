@@ -82,7 +82,6 @@ import org.hl7.fhir.validation.cli.utils.VersionSourceInformation;
 
 public class ValidationService {
 
-  private static final TimeUnit TIME_UNIT = TimeUnit.MINUTES;
   private final SessionCache sessionCache;
   private String runDate;
 
@@ -91,12 +90,7 @@ public class ValidationService {
     runDate = new SimpleDateFormat("hh:mm:ss", new Locale("en", "US")).format(new Date());
   }
 
-  public ValidationService(long cacheDuration) {
-    sessionCache = new SessionCache(cacheDuration, TIME_UNIT);
-    runDate = new SimpleDateFormat("hh:mm:ss", new Locale("en", "US")).format(new Date());
-  }
-
-  protected ValidationService(SessionCache cache) {
+  public ValidationService(SessionCache cache) {
     this.sessionCache = cache;
   }
 
