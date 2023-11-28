@@ -86,7 +86,7 @@ public class ValidationService {
   private String runDate;
 
   public ValidationService() {
-    sessionCache = new SessionCache();
+    sessionCache = new PassiveExpiringSessionCache();
     runDate = new SimpleDateFormat("hh:mm:ss", new Locale("en", "US")).format(new Date());
   }
 

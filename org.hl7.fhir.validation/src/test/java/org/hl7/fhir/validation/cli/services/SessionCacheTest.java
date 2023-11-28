@@ -15,7 +15,7 @@ class SessionCacheTest {
   @DisplayName("test session expiration works")
   void expiredSession() throws IOException, InterruptedException {
     final long EXPIRE_TIME = 5L;
-    SessionCache cache = new SessionCache(EXPIRE_TIME, TimeUnit.SECONDS);
+    SessionCache cache = new PassiveExpiringSessionCache(EXPIRE_TIME, TimeUnit.SECONDS);
     ValidationEngine testEngine = new ValidationEngine.ValidationEngineBuilder().fromNothing();
     String sessionId = cache.cacheSession(testEngine);
     TimeUnit.SECONDS.sleep(EXPIRE_TIME + 1L);
@@ -26,7 +26,7 @@ class SessionCacheTest {
   @DisplayName("test session caching works")
   void cachedSession() throws IOException {
     final long EXPIRE_TIME = 5L;
-    SessionCache cache = new SessionCache(EXPIRE_TIME, TimeUnit.SECONDS);
+    SessionCache cache = new PassiveExpiringSessionCache(EXPIRE_TIME, TimeUnit.SECONDS);
     ValidationEngine testEngine = new ValidationEngine.ValidationEngineBuilder().fromNothing();
     String sessionId = cache.cacheSession(testEngine);
     Assertions.assertEquals(testEngine, cache.fetchSessionValidatorEngine(sessionId));
@@ -35,7 +35,7 @@ class SessionCacheTest {
   @Test
   @DisplayName("test session exists")
   void sessionExists() throws IOException {
-    SessionCache cache = new SessionCache();
+    SessionCache cache = new PassiveExpiringSessionCache();
     ValidationEngine testEngine = new ValidationEngine.ValidationEngineBuilder().fromNothing();
     String sessionId = cache.cacheSession(testEngine);
     Assertions.assertTrue(cache.sessionExists(sessionId));
@@ -45,7 +45,7 @@ class SessionCacheTest {
   @Test
   @DisplayName("test null session test id returns false")
   void testNullSessionExists() {
-    SessionCache cache = new SessionCache();
+    SessionCache cache = new PassiveExpiringSessionCache();
     Assertions.assertFalse(cache.sessionExists(null));
   }
 
@@ -53,7 +53,7 @@ class SessionCacheTest {
   @DisplayName("test that explicit removeExiredSessions works")
   void testRemoveExpiredSessions() throws InterruptedException, IOException {
     final long EXPIRE_TIME = 5L;
-    SessionCache cache = new SessionCache(EXPIRE_TIME, TimeUnit.SECONDS);
+    SessionCache cache = new PassiveExpiringSessionCache(EXPIRE_TIME, TimeUnit.SECONDS);
     ValidationEngine testEngine = new ValidationEngine.ValidationEngineBuilder().fromNothing();
     String sessionId = cache.cacheSession(testEngine);
     Assertions.assertTrue(cache.sessionExists(sessionId));
