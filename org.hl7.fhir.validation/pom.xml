@@ -76,6 +76,13 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- Cache w/expiration reset after access -->
+        <dependency>
+            <groupId>com.github.ben-manes.caffeine</groupId>
+            <artifactId>caffeine</artifactId>
+            <version>3.1.8</version>
+        </dependency>
+
         <!-- XML Parsers -->
         <dependency>
             <groupId>net.sf.saxon</groupId>
